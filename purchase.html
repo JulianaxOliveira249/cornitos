@@ -20,96 +20,32 @@
    src="https://www.facebook.com/tr?id=739511288871972&ev=PageView&noscript=1" 
  /></noscript>
  <!-- End Meta Pixel Code -->
- <style>
-   body {
-     font-family: Arial, sans-serif;
-     margin: 0;
-     padding: 0;
-     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-     color: white;
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     min-height: 100vh;
-   }
-   .container {
-     text-align: center;
-     padding: 20px;
-   }
-   .message {
-     font-size: 18px;
-     margin-bottom: 20px;
-   }
-   .countdown {
-     font-size: 48px;
-     font-weight: bold;
-     margin: 20px 0;
-     color: #fff;
-   }
-   .spinner {
-     border: 4px solid rgba(255,255,255,0.3);
-     border-radius: 50%;
-     border-top: 4px solid #fff;
-     width: 40px;
-     height: 40px;
-     animation: spin 1s linear infinite;
-     margin: 20px auto;
-   }
-   @keyframes spin {
-     0% { transform: rotate(0deg); }
-     100% { transform: rotate(360deg); }
-   }
- </style>
 </head>
 <body>
- <div class="container">
-   <div class="message">Aguarde, você será redirecionado em:</div>
-   <div class="countdown" id="countdown">2</div>
-   <div class="spinner"></div>
- </div>
- 
+ <p style="text-align: center; margin-top: 50px;">Aguarde, em 2 segundos você será redirecionado</p>
  <script>
-   // Variáveis para controlar se os eventos já foram disparados
-   let hasTrackedCheckout = false;
-   let hasTrackedPurchase = false;
-   
-   // Função para disparar eventos do Meta Pixel
-   function trackEvents() {
-     if (!hasTrackedCheckout) {
-       // Registrar o evento Initiate Checkout no Meta Pixel
-       if (typeof fbq !== 'undefined') {
-         fbq('track', 'InitiateCheckout', {value: '14.90', currency: 'BRL'});
-       }
-       hasTrackedCheckout = true;
-     }
-     
-     if (!hasTrackedPurchase) {
-       // Registrar o evento de compra no Meta Pixel
-       if (typeof fbq !== 'undefined') {
-         fbq('track', 'Purchase', {value: '14.90', currency: 'BRL'});
-       }
-       hasTrackedPurchase = true;
-     }
+   // Checar se o evento "Initiate Checkout" já foi registrado no localStorage
+   const hasTrackedCheckout = localStorage.getItem('hasTrackedCheckout');
+   if (!hasTrackedCheckout) {
+     // Registrar o evento Initiate Checkout no Meta Pixel
+     fbq('track', 'InitiateCheckout', {value: '14.90', currency: 'BRL'});
+     // Marcar no localStorage que o evento foi registrado
+     localStorage.setItem('hasTrackedCheckout', 'true');
+   }  
+ 
+   // Checar se o evento "Purchase" já foi registrado no localStorage
+   const hasTrackedPurchase = localStorage.getItem('hasTrackedPurchase');
+   if (!hasTrackedPurchase) {
+     // Registrar o evento de compra no Meta Pixel
+     fbq('track', 'Purchase', {value: '14.90', currency: 'BRL'});
+     // Marcar no localStorage que o evento foi registrado
+     localStorage.setItem('hasTrackedPurchase', 'true');
    }
    
-   // Disparar eventos quando a página carregar
-   trackEvents();
-   
-   // Countdown e redirecionamento
-   let timeLeft = 2;
-   const countdownElement = document.getElementById('countdown');
-   
-   const timer = setInterval(function() {
-     timeLeft--;
-     countdownElement.textContent = timeLeft;
-     
-     if (timeLeft <= 0) {
-       clearInterval(timer);
-       countdownElement.textContent = 'Redirecionando...';
-       // Redirecionar para o canal VIP
-       window.location.href = "https://t.me/+qlFXlE6akPEwN2Mx";
-     }
-   }, 1000);
+   // Redirecionar para o canal VIP após 2 segundos
+   setTimeout(function() {
+     window.location.href = "https://t.me/+DOq6gI26-SBjMzBh";
+   }, 2000);
  </script>
 </body>
 </html>
